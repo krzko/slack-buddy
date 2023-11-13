@@ -4,12 +4,12 @@ before:
     - go mod tidy
 
 builds:
-  - main: ./cmd/slack-buddy/main.go
+  - main: ./cmd/slack-buddy
     binary: slack-buddy
-    env: [CGO_ENABLED=0]
+    # env: [CGO_ENABLED=0]
     goos:
-      # - linux
-      # - windows
+      - linux
+      - windows
       - darwin
     goarch:
       - amd64
