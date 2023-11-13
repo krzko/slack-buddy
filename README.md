@@ -80,9 +80,9 @@ Slack Buddy is ideal for anyone who need to keep their team updated on their ava
 
 Slack Buddy custom and scheduled statuses can be added via updating the`config.yaml` file in your home directory. An example config.yaml can be seen [here](./config_example.yaml). The file will be located in:
 
-* **linux**: `~/.slack-buddy/config.yaml`
+* **linux**: Soon
 * **macOS**: `~/.slack-buddy/config.yaml`
-* **Windows**: Not tested yet
+* **Windows**: Soon
 
 ### `api_token`
 
