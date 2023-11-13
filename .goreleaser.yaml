@@ -8,8 +8,8 @@ builds:
     binary: slack-buddy
     env: [CGO_ENABLED=0]
     goos:
-      - linux
-      - windows
+      # - linux
+      # - windows
       - darwin
     goarch:
       - amd64
