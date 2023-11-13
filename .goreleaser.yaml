@@ -1,6 +1,6 @@
 env:
-  - CGO_ENABLED=0
-  
+  - CGO_ENABLED=1
+
 before:
   hooks:
     - go mod tidy
@@ -8,7 +8,7 @@ before:
 builds:
   - id: slack-buddy-darwin-amd64
     binary: slack-buddy
-    main: ./cmd/slack-buddy
+    main: ./cmd/slack-buddy/
     goarch:
       - amd64
     goos:
@@ -18,7 +18,7 @@ builds:
     mod_timestamp: "{{.CommitTimestamp}}"
   - id: slack-buddy-darwin-arm64
     binary: slack-buddy
-    main: ./cmd/slack-buddy
+    main: ./cmd/slack-buddy/
     goarch:
       - arm64
     goos:
@@ -28,29 +28,27 @@ builds:
     mod_timestamp: "{{.CommitTimestamp}}"
   - id: slack-buddy-linux-amd64
     binary: slack-buddy
-    main: ./cmd/slack-buddy
+    main: ./cmd/slack-buddy/
     goarch:
       - amd64
     goos:
       - linux
     ldflags:
       - -s -w -X main.version={{.Version}} -X main.commit={{.ShortCommit}} -X main.date={{.CommitDate}}
-      - -extldflags "-lc -lrt -lpthread --static"
     mod_timestamp: "{{.CommitTimestamp}}"
   - id: slack-buddy-linux-arm64
     binary: slack-buddy
-    main: ./cmd/slack-buddy
+    main: ./cmd/slack-buddy/
     goarch:
       - arm64
     goos:
       - linux
     ldflags:
       - -s -w -X main.version={{.Version}} -X main.commit={{.ShortCommit}} -X main.date={{.CommitDate}}
-      - -extldflags "-lc -lrt -lpthread --static"
     mod_timestamp: "{{.CommitTimestamp}}"
   - id: slack-buddy-windows-amd64
     binary: slack-buddy
-    main: ./cmd/slack-buddy
+    main: ./cmd/slack-buddy/
     goarch:
       - amd64
     goos:
