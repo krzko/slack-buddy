@@ -26,36 +26,36 @@ builds:
     ldflags:
       - -s -w -X main.version={{.Version}} -X main.commit={{.ShortCommit}} -X main.date={{.CommitDate}}
     mod_timestamp: "{{.CommitTimestamp}}"
-  - id: slack-buddy-linux-amd64
-    binary: slack-buddy
-    main: ./cmd/slack-buddy/
-    goarch:
-      - amd64
-    goos:
-      - linux
-    ldflags:
-      - -s -w -X main.version={{.Version}} -X main.commit={{.ShortCommit}} -X main.date={{.CommitDate}}
-    mod_timestamp: "{{.CommitTimestamp}}"
-  - id: slack-buddy-linux-arm64
-    binary: slack-buddy
-    main: ./cmd/slack-buddy/
-    goarch:
-      - arm64
-    goos:
-      - linux
-    ldflags:
-      - -s -w -X main.version={{.Version}} -X main.commit={{.ShortCommit}} -X main.date={{.CommitDate}}
-    mod_timestamp: "{{.CommitTimestamp}}"
-  - id: slack-buddy-windows-amd64
-    binary: slack-buddy
-    main: ./cmd/slack-buddy/
-    goarch:
-      - amd64
-    goos:
-      - windows
-    ldflags:
-      - -s -w -X main.version={{.Version}} -X main.commit={{.ShortCommit}} -X main.date={{.CommitDate}}
-    mod_timestamp: "{{.CommitTimestamp}}"
+  # - id: slack-buddy-linux-amd64
+  #   binary: slack-buddy
+  #   main: ./cmd/slack-buddy/
+  #   goarch:
+  #     - amd64
+  #   goos:
+  #     - linux
+  #   ldflags:
+  #     - -s -w -X main.version={{.Version}} -X main.commit={{.ShortCommit}} -X main.date={{.CommitDate}}
+  #   mod_timestamp: "{{.CommitTimestamp}}"
+  # - id: slack-buddy-linux-arm64
+  #   binary: slack-buddy
+  #   main: ./cmd/slack-buddy/
+  #   goarch:
+  #     - arm64
+  #   goos:
+  #     - linux
+  #   ldflags:
+  #     - -s -w -X main.version={{.Version}} -X main.commit={{.ShortCommit}} -X main.date={{.CommitDate}}
+  #   mod_timestamp: "{{.CommitTimestamp}}"
+  # - id: slack-buddy-windows-amd64
+  #   binary: slack-buddy
+  #   main: ./cmd/slack-buddy/
+  #   goarch:
+  #     - amd64
+  #   goos:
+  #     - windows
+  #   ldflags:
+  #     - -s -w -X main.version={{.Version}} -X main.commit={{.ShortCommit}} -X main.date={{.CommitDate}}
+  #   mod_timestamp: "{{.CommitTimestamp}}"
 
 universal_binaries:
   - id: slack-buddy-darwin-universal
@@ -89,7 +89,7 @@ changelog:
 
 brews:
   - name: slack-buddy
-    tap:
+    repository:
       owner: 'krzko'
       name: 'homebrew-tap'
     homepage: https://github.com/krzko/slack-buddy
