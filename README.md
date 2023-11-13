@@ -84,11 +84,39 @@ Slack Buddy custom and scheduled statuses can be added via updating the`config.y
 * **macOS**: `~/.slack-buddy/config.yaml`
 * **Windows**: Not tested yet
 
+### `api_token`
+
+You will need to retrieve a Personal Token from a Slack Workspace Administrator. You can get more details from the Slack [Access Tokens](https://api.slack.com/authentication/token-types) page.
+
+### `user_id`
+
+To retrieve youe `user_id` value, follow these steps:
+
+* Open **Slack**.
+* Open **Profile** window.
+* Select the **three vertical dots** next to **View As**.
+* Select **Copy memeber ID**.
+
+### `disaply_name`
+
+* This is the default disaply name value. All statuses will be set via **`display_name` + "is ..."**.
+* This is the value that is set when you select **Clear Status**.
+
+### Example Configuration
+
+* The `title` value has to be unique.
+* Custom statuses do not have `days`, `start_time` or `end_time` values set.
+* Ensure the `status_emoji` value exists in your Slack workspace.
+
 ```yaml
 api_token: xoxp-xxx-xxx-xxx-xxx
 user_id: XXXXXXXXX
 display_name: Kristof
 custom_items:
+  - title: "Zwift"
+    tooltip: ""
+    status_text: "on Zwift"
+    status_emoji: ":bike:"
   - title: "School Run"
     tooltip: ""
     status_text: "on a school run"

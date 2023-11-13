@@ -26,12 +26,8 @@ func OnReady() {
 	// Load configuration
 	cfg, err := config.LoadConfig()
 	if err != nil {
-		// Handle error (e.g., log it)
-		cfg = &config.Config{} // Create a new config if loading failed
+		cfg = &config.Config{}
 	}
-
-	// After loading the config, check for duplicate titles
-	checkForDuplicateTitles(cfg.CustomItems)
 
 	handler := &SystrayHandler{
 		cfg: cfg,
@@ -42,6 +38,9 @@ func OnReady() {
 	if handler.cfg.ApiToken == "your_default_api_token" || handler.cfg.UserId == "your_default_user_id" || handler.cfg.DisplayName == "your_default_display_name" {
 		openSettingsDialog(cfg)
 	}
+
+	// After loading the config, check for duplicate titles
+	checkForDuplicateTitles(cfg.CustomItems)
 }
 
 func (h *SystrayHandler) getSlackClient() (*slack.SlackClient, error) {
@@ -274,7 +273,6 @@ func (h *SystrayHandler) initializeSystray() {
 	}()
 
 	// New goroutine for handling custom menu items and separating scheduled items
-	// New goroutine for handling custom menu items and separating scheduled items
 	if len(h.cfg.CustomItems) > 0 {
 		go func() {
 			for {
@@ -305,7 +303,7 @@ func openSettingsDialog(cfg *config.Config) {
 		fmt.Printf("Error displaying User ID dialog: %v\n", err)
 		return
 	}
-	cfg.UserId = userId // Update the value
+	cfg.UserId = userId
 
 	displayName, _, err := dlgs.Entry("Display Name", "Enter your Slack Display Name:", cfg.DisplayName)
 	if err != nil {
@@ -395,7 +393,6 @@ func (h *SystrayHandler) unsetStatus() error {
 	return slackClient.UnsetStatus()
 }
 
-// findCustomItemByStatusText finds a custom item by its status text.
 func findCustomItemByStatusText(items []config.CustomItem, statusText string) *config.CustomItem {
 	for _, item := range items {
 		if item.StatusText == statusText {
@@ -405,7 +402,6 @@ func findCustomItemByStatusText(items []config.CustomItem, statusText string) *c
 	return nil
 }
 
-// findCustomItemByTitle finds a custom item by its title.
 func findCustomItemByTitle(items []config.CustomItem, title string) *config.CustomItem {
 	for _, item := range items {
 		if item.Title == title {
@@ -415,7 +411,6 @@ func findCustomItemByTitle(items []config.CustomItem, title string) *config.Cust
 	return nil
 }
 
-// checkForDuplicateTitles checks for duplicate titles in the custom items and exits if found.
 func checkForDuplicateTitles(items []config.CustomItem) {
 	titles := make(map[string]bool)
 	for _, item := range items {

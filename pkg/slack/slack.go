@@ -57,15 +57,6 @@ func (c *StdLibClient) UpdateDisplayName(userID, displayName string) error {
 	}
 	defer resp.Body.Close()
 
-	// New logging
-	// respBody, err := io.ReadAll(resp.Body)
-	// if err != nil {
-	// 	return err
-	// }
-	// fmt.Printf("Response status: %s, body: %s\n", resp.Status, string(respBody))
-
-	// Handle the response (e.g., check for success, handle errors, etc.)
-
 	return nil
 }
 
