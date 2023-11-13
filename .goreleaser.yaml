@@ -4,7 +4,7 @@ before:
     - go mod tidy
 
 builds:
-  - main: ./cmd/slack-buddy
+  - main: ./cmd/slack-buddy/main.go
     binary: slack-buddy
     env: [CGO_ENABLED=0]
     goos:
