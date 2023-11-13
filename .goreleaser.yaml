@@ -6,7 +6,7 @@ before:
 builds:
   - main: ./cmd/slack-buddy/main.go
     binary: slack-buddy
-    # env: [CGO_ENABLED=0]
+    env: [CGO_ENABLED=1]
     goos:
       - linux
       - windows
