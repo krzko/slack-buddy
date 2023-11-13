@@ -22,14 +22,11 @@ jobs:
         with:
           go-version: ${{ env.GO_VERSION }}
 
-      - name: Install cross-compiler linux/arm64
-        run: sudo apt-get -y install gcc-aarch64-linux-gnu
-
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v5
         with:
           version: latest
-          args: release --config .goreleaser-darwin --clean
+          args: release --config .goreleaser-darwin.yaml --clean
         env:
           GITHUB_TOKEN: ${{ secrets.GORELEASER_TOKEN }}
 
@@ -46,11 +43,14 @@ jobs:
         with:
           go-version: ${{ env.GO_VERSION }}
 
+      - name: Install cross-compiler linux/arm64
+        run: sudo apt-get -y install gcc-aarch64-linux-gnu
+
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v5
         with:
           version: latest
-          args: release --config .goreleaser-linux --clean
+          args: release --config .goreleaser-linux.yaml --clean
         env:
           GITHUB_TOKEN: ${{ secrets.GORELEASER_TOKEN }}
 
@@ -71,6 +71,6 @@ jobs:
         uses: goreleaser/goreleaser-action@v5
         with:
           version: latest
-          args: release  --config .goreleaser-darwin --clean
+          args: release  --config .goreleaser-windows.yaml --clean
         env:
           GITHUB_TOKEN: ${{ secrets.GORELEASER_TOKEN }}
