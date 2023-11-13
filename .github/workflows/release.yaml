@@ -22,20 +22,11 @@ jobs:
         with:
           go-version: ${{ env.GO_VERSION }}
 
-      # - name: Run GoReleaser
-      #   uses: goreleaser/goreleaser-action@v5
-      #   with:
-      #     version: latest
-      #     args: release --clean
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GORELEASER_TOKEN }}
-
-      - name: Release dry run
-        run: make release-dry-run
-
-      - name: Seup release environment
-        run: |-
-          echo 'GITHUB_TOKEN=${{secrets.GORELEASER_TOKEN}}' > .release-env
-
-      - name: Release publish
-        run: make release
+      - name: Run GoReleaser
+        uses: goreleaser/goreleaser-action@v5
+        with:
+          version: latest
+          args: release --clean
+        env:
+          GITHUB_TOKEN: ${{ secrets.GORELEASER_TOKEN }}
+          

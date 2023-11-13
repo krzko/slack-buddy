@@ -1,7 +1,6 @@
 env:
-  - GO111MODULE=on
-  - CGO_ENABLED=1
-
+  - CGO_ENABLED=0
+  
 before:
   hooks:
     - go mod tidy
@@ -14,14 +13,9 @@ builds:
       - amd64
     goos:
       - darwin
-    env:
-      - CC=o64-clang
-      - CXX=o64-clang++
-    flags:
-      - -mod=readonly
-      - -trimpath
     ldflags:
       - -s -w -X main.version={{.Version}} -X main.commit={{.ShortCommit}} -X main.date={{.CommitDate}}
+    mod_timestamp: "{{.CommitTimestamp}}"
   - id: slack-buddy-darwin-arm64
     binary: slack-buddy
     main: ./cmd/slack-buddy
@@ -29,28 +23,20 @@ builds:
       - arm64
     goos:
       - darwin
-    env:
-      - CC=oa64-clang
-      - CXX=oa64-clang++
-    flags:
-      - -mod=readonly
     ldflags:
       - -s -w -X main.version={{.Version}} -X main.commit={{.ShortCommit}} -X main.date={{.CommitDate}}
+    mod_timestamp: "{{.CommitTimestamp}}"
   - id: slack-buddy-linux-amd64
     binary: slack-buddy
     main: ./cmd/slack-buddy
-    env:
-      - CC=x86_64-linux-gnu-gcc
-      - CXX=x86_64-linux-gnu-g++
     goarch:
       - amd64
     goos:
       - linux
-    flags:
-      - -mod=readonly
     ldflags:
       - -s -w -X main.version={{.Version}} -X main.commit={{.ShortCommit}} -X main.date={{.CommitDate}}
       - -extldflags "-lc -lrt -lpthread --static"
+    mod_timestamp: "{{.CommitTimestamp}}"
   - id: slack-buddy-linux-arm64
     binary: slack-buddy
     main: ./cmd/slack-buddy
@@ -58,14 +44,10 @@ builds:
       - arm64
     goos:
       - linux
-    env:
-      - CC=aarch64-linux-gnu-gcc
-      - CXX=aarch64-linux-gnu-g++
-    flags:
-      - -mod=readonly
     ldflags:
       - -s -w -X main.version={{.Version}} -X main.commit={{.ShortCommit}} -X main.date={{.CommitDate}}
       - -extldflags "-lc -lrt -lpthread --static"
+    mod_timestamp: "{{.CommitTimestamp}}"
   - id: slack-buddy-windows-amd64
     binary: slack-buddy
     main: ./cmd/slack-buddy
@@ -73,14 +55,9 @@ builds:
       - amd64
     goos:
       - windows
-    env:
-      - CC=x86_64-w64-mingw32-gcc
-      - CXX=x86_64-w64-mingw32-g++
-    flags:
-      - -mod=readonly
-      - -buildmode=exe
     ldflags:
       - -s -w -X main.version={{.Version}} -X main.commit={{.ShortCommit}} -X main.date={{.CommitDate}}
+    mod_timestamp: "{{.CommitTimestamp}}"
 
 universal_binaries:
   - id: slack-buddy-darwin-universal
