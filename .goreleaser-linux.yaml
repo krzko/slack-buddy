@@ -1,0 +1,62 @@
+env:
+  - CGO_ENABLED=1
+
+before:
+  hooks:
+    - go mod tidy
+
+builds:
+  - id: slack-buddy-linux-amd64
+    binary: slack-buddy
+    main: ./cmd/slack-buddy/
+    goarch:
+      - amd64
+    goos:
+      - linux
+    ldflags:
+      - -s -w -X main.version={{.Version}} -X main.commit={{.ShortCommit}} -X main.date={{.CommitDate}}
+    mod_timestamp: "{{.CommitTimestamp}}"
+  - id: slack-buddy-linux-arm64
+    binary: slack-buddy
+    main: ./cmd/slack-buddy/
+    goarch:
+      - arm64
+    goos:
+      - linux
+    ldflags:
+      - -s -w -X main.version={{.Version}} -X main.commit={{.ShortCommit}} -X main.date={{.CommitDate}}
+    mod_timestamp: "{{.CommitTimestamp}}"
+
+archives:
+  - name_template: '{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}'
+    format_overrides:
+    - goos: windows
+      format: zip
+    wrap_in_directory: true
+
+checksum:
+  name_template: checksums.txt
+
+snapshot:
+  name_template: "{{ incpatch .Version }}-next"
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+    - '^docs:'
+    - '^test:'
+    - Merge pull request
+    - Merge branch
+
+brews:
+  - name: slack-buddy
+    repository:
+      owner: 'krzko'
+      name: 'homebrew-tap'
+    homepage: https://github.com/krzko/slack-buddy
+    description: "Slack Buddy is a convenient tool designed to help you manage your Slack status effortlessly"
+    install: |
+      bin.install "slack-buddy"
+    test: |
+      system "#{bin}/slack-buddy -v"
