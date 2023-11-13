@@ -4,18 +4,32 @@ before:
     - go mod tidy
 
 builds:
-  - main: ./cmd/slack-buddy/main.go
+  - id: linux-build
     binary: slack-buddy
-    env: [CGO_ENABLED=1]
-    goos:
-      - linux
-      - windows
-      - darwin
-    goarch:
-      - amd64
-      - arm64
     ldflags:
-      - -s -w -X main.version={{.Version}} -X main.commit={{.ShortCommit}} -X main.date={{.CommitDate}}
+    - -s -w -X main.version={{.Version}} -X main.commit={{.ShortCommit}} -X main.date={{.CommitDate}}
+    - -extldflags=-static
+    env:
+    - CGO_ENABLED=1
+    goos:
+    - linux
+    goarch:
+    - amd64
+    main: ./cmd/slack-buddy/main.go
+  - id: darwin-build
+    binary: slack-buddy
+    ldflags:
+    - -s -w -X main.version={{.Version}} -X main.commit={{.ShortCommit}} -X main.date={{.CommitDate}}
+    env:
+    - CGO_ENABLED=1
+    - CC=/home/runner/work/osxcross/target/bin/o64-clang
+    - CXX=/home/runner/work/osxcross/target/bin/o64-clang++
+    goos:
+    - darwin
+    goarch:
+    - amd64
+    - arm64
+    main: ./cmd/slack-buddy/main.go
     mod_timestamp: '{{ .CommitTimestamp }}'
 
 archives:
