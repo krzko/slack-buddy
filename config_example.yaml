@@ -1,0 +1,33 @@
+# $USER/.slack-buddy/config.yaml
+api_token: xoxp-xxx-xxx-xxx-xxx
+user_id: XXXXXXXXX
+display_name: Kristof
+custom_items:
+  - title: "School Run"
+    tooltip: ""
+    status_text: "on a school run"
+    status_emoji: ":school_satchel:"
+    days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
+    start_time: "08:45"
+    end_time: "09:15"
+  - title: "Daily Stand-up"
+    tooltip: ""
+    status_text: "in a meeting"
+    status_emoji: ":spiral_calendar_pad:"
+    days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
+    start_time: "10:00"
+    end_time: "10:15"
+  - title: "Lunch"
+    tooltip: ""
+    status_text: "lunching"
+    status_emoji: ":pizza:"
+    days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
+    start_time: "12:00"
+    end_time: "13:00"
+  - title: "School Run"
+    tooltip: ""
+    status_text: "on a school run"
+    status_emoji: ":school_satchel:"
+    days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
+    start_time: "15:15"
+    end_time: "15:45"
