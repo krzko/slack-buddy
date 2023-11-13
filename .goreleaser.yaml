@@ -4,32 +4,42 @@ before:
     - go mod tidy
 
 builds:
-  # - id: linux-build
-  #   binary: slack-buddy
-  #   ldflags:
-  #   - -s -w -X main.version={{.Version}} -X main.commit={{.ShortCommit}} -X main.date={{.CommitDate}}
-  #   - -extldflags=-static
-  #   env:
-  #   - CGO_ENABLED=1
-  #   goos:
-  #   - linux
-  #   goarch:
-  #   - amd64
-  #   main: ./cmd/slack-buddy/main.go
-  - id: darwin-build
-    binary: slack-buddy
-    ldflags:
-    - -s -w -X main.version={{.Version}} -X main.commit={{.ShortCommit}} -X main.date={{.CommitDate}}
-    env:
-    - CGO_ENABLED=0
-    # - CC=/home/runner/work/osxcross/target/bin/o64-clang
-    # - CXX=/home/runner/work/osxcross/target/bin/o64-clang++
-    goos:
-    - darwin
-    goarch:
-    - amd64
-    - arm64
+  - id: darwin-amd64
     main: ./cmd/slack-buddy/main.go
+    binary: slack-buddy
+    goos:
+      - darwin
+    goarch:
+      - amd64
+    env:
+      - PKG_CONFIG_SYSROOT_DIR=/sysroot/macos/amd64
+      - PKG_CONFIG_PATH=/sysroot/macos/amd64/usr/local/lib/pkgconfig
+      - CC=o64-clang
+      - CXX=o64-clang++
+    flags:
+      - -mod=readonly
+    ldflags:
+      - -s -w -X main.version={{.Version}} -X main.commit={{.ShortCommit}} -X main.date={{.CommitDate}}
+  - id: linux-armhf
+    main: ./cmd/slack-buddy/main.go
+    binary: slack-buddy
+    goos:
+      - linux
+    goarch:
+      - arm
+    goarm:
+      - 7
+    env:
+      - CC=arm-linux-gnueabihf-gcc
+      - CXX=arm-linux-gnueabihf-g++
+      - CGO_CFLAGS=--sysroot=/sysroot/linux/armhf
+      - CGO_LDFLAGS=--sysroot=/sysroot/linux/armhf
+      - PKG_CONFIG_SYSROOT_DIR=/sysroot/linux/armhf
+      - PKG_CONFIG_PATH=/sysroot/linux/armhf/opt/vc/lib/pkgconfig:/sysroot/linux/armhf/usr/lib/arm-linux-gnueabihf/pkgconfig:/sysroot/linux/armhf/usr/lib/pkgconfig:/sysroot/linux/armhf/usr/local/lib/pkgconfig
+    flags:
+      - -mod=readonly
+    ldflags:
+      - -s -w -X main.version={{.Version}} -X main.commit={{.ShortCommit}} -X main.date={{.CommitDate}}
     mod_timestamp: '{{ .CommitTimestamp }}'
 
 archives:
