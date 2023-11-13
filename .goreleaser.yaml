@@ -1,46 +1,94 @@
-# .goreleaser.yml
+env:
+  - GO111MODULE=on
+  - CGO_ENABLED=1
+
 before:
   hooks:
     - go mod tidy
 
 builds:
-  - id: darwin-amd64
-    main: ./cmd/slack-buddy/main.go
+  - id: slack-buddy-darwin-amd64
     binary: slack-buddy
-    goos:
-      - darwin
+    main: ./cmd/slack-buddy
     goarch:
       - amd64
+    goos:
+      - darwin
     env:
-      - PKG_CONFIG_SYSROOT_DIR=/sysroot/macos/amd64
-      - PKG_CONFIG_PATH=/sysroot/macos/amd64/usr/local/lib/pkgconfig
       - CC=o64-clang
       - CXX=o64-clang++
     flags:
       - -mod=readonly
+      - -trimpath
     ldflags:
       - -s -w -X main.version={{.Version}} -X main.commit={{.ShortCommit}} -X main.date={{.CommitDate}}
-  - id: linux-armhf
-    main: ./cmd/slack-buddy/main.go
+  - id: slack-buddy-darwin-arm64
     binary: slack-buddy
-    goos:
-      - linux
+    main: ./cmd/slack-buddy
     goarch:
-      - arm
-    goarm:
-      - 7
+      - arm64
+    goos:
+      - darwin
     env:
-      - CC=arm-linux-gnueabihf-gcc
-      - CXX=arm-linux-gnueabihf-g++
-      - CGO_CFLAGS=--sysroot=/sysroot/linux/armhf
-      - CGO_LDFLAGS=--sysroot=/sysroot/linux/armhf
-      - PKG_CONFIG_SYSROOT_DIR=/sysroot/linux/armhf
-      - PKG_CONFIG_PATH=/sysroot/linux/armhf/opt/vc/lib/pkgconfig:/sysroot/linux/armhf/usr/lib/arm-linux-gnueabihf/pkgconfig:/sysroot/linux/armhf/usr/lib/pkgconfig:/sysroot/linux/armhf/usr/local/lib/pkgconfig
+      - CC=oa64-clang
+      - CXX=oa64-clang++
     flags:
       - -mod=readonly
     ldflags:
       - -s -w -X main.version={{.Version}} -X main.commit={{.ShortCommit}} -X main.date={{.CommitDate}}
-    mod_timestamp: '{{ .CommitTimestamp }}'
+  - id: slack-buddy-linux-amd64
+    binary: slack-buddy
+    main: ./cmd/slack-buddy
+    env:
+      - CC=x86_64-linux-gnu-gcc
+      - CXX=x86_64-linux-gnu-g++
+    goarch:
+      - amd64
+    goos:
+      - linux
+    flags:
+      - -mod=readonly
+    ldflags:
+      - -s -w -X main.version={{.Version}} -X main.commit={{.ShortCommit}} -X main.date={{.CommitDate}}
+      - -extldflags "-lc -lrt -lpthread --static"
+  - id: slack-buddy-linux-arm64
+    binary: slack-buddy
+    main: ./cmd/slack-buddy
+    goarch:
+      - arm64
+    goos:
+      - linux
+    env:
+      - CC=aarch64-linux-gnu-gcc
+      - CXX=aarch64-linux-gnu-g++
+    flags:
+      - -mod=readonly
+    ldflags:
+      - -s -w -X main.version={{.Version}} -X main.commit={{.ShortCommit}} -X main.date={{.CommitDate}}
+      - -extldflags "-lc -lrt -lpthread --static"
+  - id: slack-buddy-windows-amd64
+    binary: slack-buddy
+    main: ./cmd/slack-buddy
+    goarch:
+      - amd64
+    goos:
+      - windows
+    env:
+      - CC=x86_64-w64-mingw32-gcc
+      - CXX=x86_64-w64-mingw32-g++
+    flags:
+      - -mod=readonly
+      - -buildmode=exe
+    ldflags:
+      - -s -w -X main.version={{.Version}} -X main.commit={{.ShortCommit}} -X main.date={{.CommitDate}}
+
+universal_binaries:
+  - id: slack-buddy-darwin-universal
+    ids:
+      - slack-buddy-darwin-amd64
+      - slack-buddy-darwin-arm64
+    replace: true
+    name_template: "slack-buddy"
 
 archives:
   - name_template: '{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}'
