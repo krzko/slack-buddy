@@ -1,6 +1,7 @@
 module github.com/krzko/slack-buddy
 
-go 1.21
+go 1.23.0
+
 toolchain go1.24.1
 
 require (
@@ -8,7 +9,7 @@ require (
 	github.com/getlantern/systray v1.2.2
 	github.com/jasonlvhit/gocron v0.0.1
 	github.com/slack-go/slack v0.16.0
-	golang.org/x/text v0.24.0
+	golang.org/x/text v0.25.0
 	gopkg.in/yaml.v2 v2.4.0
 )
 
