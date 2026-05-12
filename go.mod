@@ -7,7 +7,7 @@ require (
 	github.com/getlantern/systray v1.2.2
 	github.com/jasonlvhit/gocron v0.0.1
 	github.com/slack-go/slack v0.23.1
-	golang.org/x/text v0.36.0
+	golang.org/x/text v0.37.0
 	gopkg.in/yaml.v2 v2.4.0
 )
 
